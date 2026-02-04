@@ -3,7 +3,7 @@
 
 # Web Framework
 Flask==2.3.3
-Flask-CORS==4.0.0
+Flask-CORS==6.0.0
 Flask-SQLAlchemy==3.0.5
 
 # Database
@@ -13,7 +13,7 @@ SQLAlchemy==2.0.21
 # For PostgreSQL: psycopg2-binary==2.9.7
 
 # HTTP Requests
-requests==2.31.0
+requests==2.32.4
 
 # Environment Variables
 python-dotenv==1.0.0
