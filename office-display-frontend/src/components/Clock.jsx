@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Clock as ClockIcon } from 'lucide-react'
 
-/**
- * Clock Component
- * Displays current time and date in a large, readable format
- * Updates every second for real-time display
- */
 const Clock = () => {
   const [time, setTime] = useState(new Date())
 
@@ -18,11 +12,6 @@ const Clock = () => {
     return () => clearInterval(timer)
   }, [])
 
-  /**
-   * Format time in 12-hour format with seconds
-   * @param {Date} date - Date object to format
-   * @returns {string} Formatted time string
-   */
   const formatTime = (date) => {
     return date.toLocaleTimeString('en-US', {
       hour: '2-digit',
@@ -32,11 +21,6 @@ const Clock = () => {
     })
   }
 
-  /**
-   * Format date with full day and month names
-   * @param {Date} date - Date object to format
-   * @returns {string} Formatted date string
-   */
   const formatDate = (date) => {
     return date.toLocaleDateString('en-US', {
       weekday: 'long',
@@ -47,17 +31,11 @@ const Clock = () => {
   }
 
   return (
-    <div className="text-center space-y-2">
-      <div className="flex items-center justify-center gap-2 mb-4">
-        <ClockIcon className="h-8 w-8" />
-        <h1 className="text-3xl font-bold">Office Display</h1>
-      </div>
-      
-      <div className="text-6xl font-mono font-bold tracking-wider">
+    <div className="text-center space-y-4">
+      <div className="text-7xl font-mono font-bold tracking-wider text-blue-600">
         {formatTime(time)}
       </div>
-      
-      <div className="text-xl text-muted-foreground">
+      <div className="text-2xl text-gray-700 font-light">
         {formatDate(time)}
       </div>
     </div>

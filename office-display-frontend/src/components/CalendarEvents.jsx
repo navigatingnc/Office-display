@@ -1,20 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Calendar, Clock, MapPin } from 'lucide-react'
 
-/**
- * CalendarEvents Component
- * Displays upcoming calendar events from the backend API
- * Refreshes every 5 minutes to keep data current
- */
 const CalendarEvents = () => {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    /**
-     * Fetch calendar events from the backend API
-     */
     const fetchEvents = async () => {
       try {
         setLoading(true)
@@ -43,11 +35,6 @@ const CalendarEvents = () => {
     return () => clearInterval(interval)
   }, [])
 
-  /**
-   * Format time in 12-hour format
-   * @param {string} dateString - ISO date string
-   * @returns {string} Formatted time string
-   */
   const formatTime = (dateString) => {
     return new Date(dateString).toLocaleTimeString('en-US', {
       hour: '2-digit',
@@ -56,11 +43,6 @@ const CalendarEvents = () => {
     })
   }
 
-  /**
-   * Format date with abbreviated day and month
-   * @param {string} dateString - ISO date string
-   * @returns {string} Formatted date string
-   */
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       weekday: 'short',
@@ -69,78 +51,46 @@ const CalendarEvents = () => {
     })
   }
 
-  // Loading state
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 h-full">
-        <div className="flex items-center gap-2 mb-4">
-          <Calendar className="h-6 w-6" />
-          <h2 className="text-2xl font-bold">Upcoming Events</h2>
-        </div>
-        <div className="flex items-center justify-center h-32">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-        </div>
+      <div className="bg-gradient-to-br from-purple-400 to-purple-500 rounded-lg shadow-lg p-8 h-full flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent"></div>
       </div>
     )
   }
 
-  // Error state
   if (error) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 h-full">
-        <div className="flex items-center gap-2 mb-4">
-          <Calendar className="h-6 w-6" />
-          <h2 className="text-2xl font-bold">Upcoming Events</h2>
-        </div>
-        <div className="text-center text-gray-500">
-          <p>Unable to load events</p>
-          <p className="text-sm">{error}</p>
-        </div>
+      <div className="bg-gradient-to-br from-gray-400 to-gray-500 rounded-lg shadow-lg p-8 h-full flex items-center justify-center">
+        <Calendar className="h-16 w-16 text-white opacity-50" />
       </div>
     )
   }
 
-  // Empty state
   if (events.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 h-full">
-        <div className="flex items-center gap-2 mb-4">
-          <Calendar className="h-6 w-6" />
-          <h2 className="text-2xl font-bold">Upcoming Events</h2>
-        </div>
-        <div className="text-center text-gray-500 py-8">
-          <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
-          <p>No upcoming events</p>
-        </div>
+      <div className="bg-gradient-to-br from-purple-300 to-purple-400 rounded-lg shadow-lg p-8 h-full flex items-center justify-center">
+        <Calendar className="h-16 w-16 text-white opacity-50" />
       </div>
     )
   }
 
-  // Events list
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 h-full overflow-y-auto">
-      <div className="flex items-center gap-2 mb-4">
-        <Calendar className="h-6 w-6" />
-        <h2 className="text-2xl font-bold">Upcoming Events</h2>
-      </div>
-      
-      <div className="space-y-4">
+    <div className="bg-gradient-to-br from-purple-400 to-pink-500 rounded-lg shadow-lg p-6 h-full overflow-y-auto">
+      <div className="space-y-3">
         {events.slice(0, 5).map((event) => (
-          <div key={event.id} className="border-l-4 border-blue-500 pl-4 py-2">
-            <h3 className="font-semibold text-lg">{event.title}</h3>
-            <div className="flex flex-col gap-2 text-sm text-gray-600 mt-1">
-              <div className="flex items-center gap-1">
+          <div key={event.id} className="bg-white bg-opacity-20 backdrop-blur rounded-lg p-4 text-white">
+            <h3 className="font-bold text-lg">{event.title}</h3>
+            <div className="flex flex-col gap-2 text-sm mt-2 opacity-90">
+              <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
-                <span>{formatDate(event.start)} at {formatTime(event.start)}</span>
+                <span>{formatDate(event.start)} {formatTime(event.start)}</span>
               </div>
               {event.location && (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
                   <span>{event.location}</span>
                 </div>
-              )}
-              {event.description && (
-                <p className="text-xs text-gray-500 mt-1">{event.description}</p>
               )}
             </div>
           </div>
